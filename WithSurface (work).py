@@ -204,20 +204,12 @@ for i in array_obj[3]:
 
 points_for_delaunay_2d=[]
 x_i, y_i, z_i = np.array(x_i), np.array(y_i),np.array(z_i)
-#перводим все точки из array_obj в читаемый для pyVista вид
-p = pv.Plotter()
-for i in array_obj:
-    reshape_point_x=np.array(i)
-    points_for_delaunay_2d=np.c_[reshape_point_x[:,0],reshape_point_x[:,1],reshape_point_x[:,2]]
-    cloud = pv.PolyData(points_for_delaunay_2d)
-    surf = cloud.delaunay_2d()
-    p.add_mesh(surf)
-#points_for_delaunay_2d = np.c_[x_i.reshape(-1), y_i.reshape(-1), z_i.reshape(-1)]
+points_for_delaunay_2d = np.c_[x_i.reshape(-1), y_i.reshape(-1), z_i.reshape(-1)]
 
-#cloud = pv.PolyData(points_for_delaunay_2d)
+cloud = pv.PolyData(points_for_delaunay_2d)
 #cloud.plot(point_size=15)
-#surf = cloud.delaunay_2d()
-p.show()
+surf = cloud.delaunay_2d()
+surf.plot(show_edges=False)
 
 fig = plt.figure(figsize=(12, 12), dpi=100)
 ax = fig.add_subplot(projection='3d')
