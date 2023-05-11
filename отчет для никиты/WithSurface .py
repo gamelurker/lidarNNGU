@@ -18,6 +18,7 @@ import matplotlib.pyplot as plt
 from random import gauss
 from functools import reduce
 import pyvista as pv
+import random
 
 from collections import deque
 
@@ -211,13 +212,19 @@ for i in array_obj:
     points_for_delaunay_2d=np.c_[reshape_point_x[:,0],reshape_point_x[:,1],reshape_point_x[:,2]]
     cloud = pv.PolyData(points_for_delaunay_2d)
     surf = cloud.delaunay_2d()
-    p.add_mesh(surf)
+
+# Создаем массив цветов, а пока рандом
+    color_arr = [random.randint(-3, 3) for i in range(surf.n_points)]
+    #color_arr = [массив данных c прибора]
+    surf["C1olors"] = color_arr
+
+    p.add_mesh(surf, scalars ="C1olors", show_scalar_bar=True, scalar_bar_args={'title': 'Level of Sharpness (reflection coefficient)'})
 #points_for_delaunay_2d = np.c_[x_i.reshape(-1), y_i.reshape(-1), z_i.reshape(-1)]
 
 #cloud = pv.PolyData(points_for_delaunay_2d)
 #cloud.plot(point_size=15)
 #surf = cloud.delaunay_2d()
-p.show()
+p.show() 
 
 fig = plt.figure(figsize=(12, 12), dpi=100)
 ax = fig.add_subplot(projection='3d')
